@@ -22,9 +22,10 @@ const tagLineElement = document.querySelector(".banner-img + p");
 let currentIndex = 0;
 
 function showSlide(index) {
-  const slide = slides[index];
-  imgElement.src = slide.image;
-  tagLineElement.innerHTML = slide.tagLine;
+	const slide = slides[index];
+	imgElement.src = slide.image;
+	tagLineElement.innerHTML = slide.tagLine;
+	updateDots(index);
 }
 
 function showNextSlide() {
@@ -43,8 +44,12 @@ const rightArrow = document.querySelector(".right-arrow");
 leftArrow.addEventListener("click", showPreviousSlide);
 rightArrow.addEventListener("click", showNextSlide);
 
+const dots = document.querySelectorAll(".dot");
+dots.forEach((dot, i) => {
+	dot.addEventListener("click", () => onDotClick(i));
+});
+
 function updateDots(index) {
-	const dots = document.querySelectorAll(".dot");
 	dots.forEach((dot, i) => {
 	  if (i === index) {
 		dot.classList.add("dot_selected");
@@ -52,13 +57,11 @@ function updateDots(index) {
 		dot.classList.remove("dot_selected");
 	  }
 	});
-  }
-  
-function showSlide(index) {
-	const slide = slides[index];
-	imgElement.src = slide.image;
-	tagLineElement.innerHTML = slide.tagLine;
-	updateDots(index);
+}
+
+function onDotClick(index) {
+	currentIndex = index;
+	showSlide(currentIndex);
 }
 
 showSlide(0);
